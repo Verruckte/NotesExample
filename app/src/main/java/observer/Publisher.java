@@ -1,9 +1,9 @@
 package observer;
 
-import com.example.notesexample.Note;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import data.Note;
 
 public class Publisher {
 
