@@ -1,6 +1,6 @@
 package observer;
 
-import com.example.notesexample.Note;
+import data.Note;
 
 public interface Observer {
     void updateNote(Note note);

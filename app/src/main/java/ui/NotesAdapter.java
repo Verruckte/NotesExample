@@ -7,23 +7,30 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.notesexample.Note;
-import com.example.notesexample.NotesSource;
 import com.example.notesexample.R;
+
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+
+import data.Note;
+import data.NotesSourceInterface;
 
 public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> {
     private final Fragment fragment;
+    private NotesSourceInterface dataSource;
     private MyClickListener myClickListener;
-    private NotesSource dataSource;
     private int menuPosition;
 
-    public NotesAdapter(NotesSource dataSource, Fragment fragment) {
-        this.dataSource = dataSource;
+    public NotesAdapter(Fragment fragment) {
         this.fragment = fragment;
+    }
+
+    public void setDataSource(NotesSourceInterface dataSource) {
+        this.dataSource = dataSource;
+        notifyDataSetChanged();
     }
 
     public int getMenuPosition() {
@@ -36,16 +43,17 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public NotesAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item, parent, false);
         return new ViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.getItemLayout().setBackgroundColor(dataSource.getNote(position).getColor());
+    public void onBindViewHolder(@NonNull NotesAdapter.ViewHolder holder, int position) {
         holder.getTitleTextView().setText(dataSource.getNote(position).getTitle());
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss dd-MM-yyyy",
+                Locale.getDefault());
         holder.getDateTextView().setText(dataSource.getNote(position).getCreationDate());
     }
 
@@ -59,14 +67,12 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private CardView cardView;
         private LinearLayout itemLayout;
         private TextView titleTextView;
         private TextView dateTextView;
 
         public ViewHolder(@NonNull final View itemView) {
             super(itemView);
-            cardView = (CardView) itemView;
             itemLayout = itemView.findViewById(R.id.element_of_recycler_view);
             titleTextView = itemView.findViewById(R.id.first_tv_of_item);
             dateTextView = itemView.findViewById(R.id.second_tv_of_item);

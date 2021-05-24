@@ -1,4 +1,4 @@
-package com.example.notesexample;
+package data;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -6,8 +6,6 @@ import android.os.Parcelable;
 
 public class Note implements Parcelable {
 
-    private String title;
-    private String content;
     public static final Creator<Note> CREATOR = new Creator<Note>() {
         @Override
         public Note createFromParcel(Parcel in) {
@@ -19,26 +17,21 @@ public class Note implements Parcelable {
             return new Note[size];
         }
     };
-    private int color;
+    private String id;
+    private String title;
+    private String content;
     private String creationDate;
 
-    public Note(String title, String content, String creationDate, int color) {
+    public Note(String title, String content, String creationDate) {
         this.title = title;
         this.content = content;
         this.creationDate = creationDate;
-        this.color = color;
     }
 
     protected Note(Parcel in) {
         title = in.readString();
         content = in.readString();
         creationDate = in.readString();
-        color = in.readInt();
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
     }
 
     @Override
@@ -46,7 +39,11 @@ public class Note implements Parcelable {
         dest.writeString(title);
         dest.writeString(content);
         dest.writeString(creationDate);
-        dest.writeInt(color);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public String getTitle() {
@@ -61,11 +58,11 @@ public class Note implements Parcelable {
         return creationDate;
     }
 
-    public int getColor() {
-        return color;
+    public String getId() {
+        return id;
     }
 
-    public void setColor(int color) {
-        this.color = color;
+    public void setId(String id) {
+        this.id = id;
     }
 }

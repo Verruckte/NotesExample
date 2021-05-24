@@ -12,7 +12,7 @@ import androidx.appcompat.widget.Toolbar;
 import java.util.Objects;
 
 import observer.Publisher;
-import ui.ListOfNotesFragment;
+import ui.StartFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         navigation = new Navigation(getSupportFragmentManager());
         initToolbar();
-        getNavigation().addFragment(ListOfNotesFragment.newInstance(), false);
+        getNavigation().addFragment(StartFragment.newInstance(), false);
     }
 
     private void initToolbar() {
